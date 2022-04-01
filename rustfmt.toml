@@ -1,0 +1,9 @@
+tab_spaces = 2
+force_multiline_blocks = true
+struct_lit_single_line = false
+comment_width = 60
+fn_args_layout = "Vertical"
+# force_multiline_blocks = true
+imports_indent = "Block"
+imports_layout = "Vertical"
+indent_style = "Block"

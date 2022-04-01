@@ -1,0 +1,17 @@
+[package]
+name = "esm"
+version = "0.1.0"
+authors = []
+edition = "2021"
+
+[workspace]
+members = [
+  "esm_utils",
+  "esm_parser",
+]
+
+[dependencies]
+bytes = "1.1.0"
+nom = "7.1.1"
+esm_utils = { path = "esm_utils" }
+esm_parser = { path = "esm_parser" }
