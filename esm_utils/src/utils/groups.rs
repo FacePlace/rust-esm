@@ -1,7 +1,7 @@
 use bytes::{Buf, Bytes};
 use nom::IResult;
 
-use super::records::Record;
+use super::{headers::Headers, records::Record};
 
 #[derive(Debug)]
 #[allow(dead_code)]
@@ -14,7 +14,9 @@ pub struct Group {
 
 impl Group {
   pub fn new(mut buffer: Bytes) -> IResult<Bytes, Self> {
-    let header = buffer.split_to(24);
+    let header_size = Headers::new().group;
+
+    let header = buffer.split_to(header_size);
 
     let s_type = String::from_utf8(header.slice(..4).to_vec()).expect("Error");
 
@@ -23,7 +25,7 @@ impl Group {
     let signature = String::from_utf8(header.slice(8..12).to_vec()).expect("Error");
     // println!("Processing group: {}.", signature);
 
-    let mut records_buffer = buffer.split_to(size - 24);
+    let mut records_buffer = buffer.split_to(size - header_size);
 
     let mut records = Vec::new();
 

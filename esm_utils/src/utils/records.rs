@@ -1,7 +1,7 @@
 use bytes::{Buf, Bytes};
 use nom::IResult;
 
-use super::subrecords::Subrecord;
+use super::{headers::Headers, subrecords::Subrecord};
 
 #[derive(Debug)]
 #[allow(dead_code)]
@@ -13,7 +13,9 @@ pub struct Record {
 
 impl Record {
   pub fn new(mut buffer: Bytes) -> IResult<Bytes, Self> {
-    let header = buffer.split_to(24);
+    let header_size = Headers::new().record;
+
+    let header = buffer.split_to(header_size);
 
     let s_type = String::from_utf8(header.slice(..4).to_vec()).expect("Error");
 

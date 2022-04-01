@@ -31,7 +31,7 @@ fn main() {
     mem = group_tuple.0;
   }
 
-  println!("{:?}", groups);
+  // println!("{:?}", groups);
 
   println!("{:.2?}", now.elapsed());
 }
