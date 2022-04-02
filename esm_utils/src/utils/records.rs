@@ -18,14 +18,14 @@ impl Record {
   ) -> IResult<Bytes, Self> {
     let header_size = Headers::new().record;
 
-    let header = buffer.split_to(header_size);
+    let mut header = buffer.split_to(header_size);
 
-    let s_type = str_from_buffer(header.slice(..4));
+    let s_type = str_from_buffer(header.split_to(4));
 
     if s_type == signature { // TODO: Handle subgroups
     }
 
-    let size = header.slice(4..8).get_u32_le() as usize;
+    let size = header.split_to(4).get_u32_le() as usize;
 
     let mut subrecords_buffer = buffer.split_to(size);
 

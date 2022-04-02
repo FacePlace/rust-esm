@@ -16,13 +16,13 @@ impl Group {
   pub fn new(mut buffer: Bytes) -> IResult<Bytes, Self> {
     let header_size = Headers::new().group;
 
-    let header = buffer.split_to(header_size);
+    let mut header = buffer.split_to(header_size);
 
-    let s_type = str_from_buffer(header.slice(..4));
+    let s_type = str_from_buffer(header.split_to(4));
 
-    let size = header.slice(4..8).get_u32_le() as usize;
+    let size = header.split_to(4).get_u32_le() as usize;
 
-    let signature = str_from_buffer(header.slice(8..12));
+    let signature = str_from_buffer(header.split_to(4));
     // println!("Processing group: {}.", signature);
 
     let mut records_buffer = buffer.split_to(size - header_size);

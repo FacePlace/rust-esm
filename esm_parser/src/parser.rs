@@ -15,7 +15,7 @@ pub fn parse_esm(path: String) -> Vec<Group> {
 
   let mut mem = Bytes::from(buf);
 
-  let master_header = mem.split_to(Headers::new().record);
+  let mut master_header = mem.split_to(Headers::new().record);
 
   let _master_buffer = mem.split_to(master_header.slice(4..8).get_u32_le() as usize); // skip master header's contents
 
