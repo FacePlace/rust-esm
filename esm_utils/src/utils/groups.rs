@@ -6,47 +6,48 @@ use super::{buffer::str_from_buffer, headers::Headers, records::Record};
 #[derive(Debug)]
 #[allow(dead_code)]
 pub struct Group {
-  pub s_type: String,
-  pub size: usize,
-  pub signature: String,
-  pub records: Vec<Record>,
+    pub s_type: String,
+    pub size: usize,
+    pub signature: String,
+    pub records: Vec<Record>,
 }
 
 impl Group {
-  pub fn new(mut buffer: Bytes) -> IResult<Bytes, Self> {
-    let header_size = Headers::new().group;
+    pub fn new(mut buffer: Bytes) -> IResult<Bytes, Self> {
+        let header_size = Headers::new().group;
 
-    let mut header = buffer.split_to(header_size);
+        let mut header = buffer.split_to(header_size);
 
-    let s_type = str_from_buffer(header.split_to(4));
+        let s_type = str_from_buffer(header.split_to(4));
 
-    let size = header.split_to(4).get_u32_le() as usize;
+        let size = header.split_to(4).get_u32_le() as usize;
 
-    let signature = str_from_buffer(header.split_to(4));
-    // println!("Processing group: {}.", signature);
+        let signature = str_from_buffer(header.split_to(4));
+        // println!("Processing group: {}.", signature);
 
-    let mut records_buffer = buffer.split_to(size - header_size);
+        let mut records_buffer = buffer.split_to(size - header_size);
 
-    let mut records = Vec::new();
+        let mut records = Vec::new();
 
-    if signature != "CELL" && signature != "WRLD" && signature != "DIAL" && signature != "NPC_" {
-      while records_buffer.len() > 0 {
-        let record_tuple = Record::new(records_buffer, signature.to_owned()).unwrap();
+        if signature != "CELL" && signature != "WRLD" && signature != "DIAL" && signature != "NPC_"
+        {
+            while records_buffer.len() > 0 {
+                let record_tuple = Record::new(records_buffer, signature.to_owned()).unwrap();
 
-        records.push(record_tuple.1);
+                records.push(record_tuple.1);
 
-        records_buffer = record_tuple.0;
-      }
+                records_buffer = record_tuple.0;
+            }
+        }
+
+        Ok((
+            buffer,
+            Group {
+                s_type,
+                size,
+                signature,
+                records,
+            },
+        ))
     }
-
-    Ok((
-      buffer,
-      Group {
-        s_type,
-        size,
-        signature,
-        records,
-      },
-    ))
-  }
 }

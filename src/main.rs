@@ -2,13 +2,21 @@ use esm_parser::parser::parse_esm;
 use std::time::Instant;
 
 fn main() {
-  let now = Instant::now();
+    let now = Instant::now();
 
-  let file_path = "data/Skyrim/Skyrim.esm";
+    let files = vec![
+        "data/Skyrim/Skyrim.esm",
+        "data/Skyrim/Update.esm",
+        "data/Skyrim/HearthFires.esm",
+        "data/Skyrim/Dawnguard.esm",
+        "data/Skyrim/Dragonborn.esm",
+    ];
 
-  let _groups = parse_esm(file_path.to_string());
+    for n in files.iter() {
+        let _groups = parse_esm(n.to_string());
+    }
 
-  // println!("{:?}", groups);
+    // println!("{:?}", groups);
 
-  println!("Finished {:.2?}", now.elapsed());
+    println!("Finished in {:.2?}", now.elapsed());
 }
