@@ -1,7 +1,7 @@
 use bytes::{Buf, Bytes};
 use nom::IResult;
 
-use super::{headers::Headers, subrecords::Subrecord};
+use super::{buffer::str_from_buffer, headers::Headers, subrecords::Subrecord};
 
 #[derive(Debug)]
 #[allow(dead_code)]
@@ -20,7 +20,7 @@ impl Record {
 
     let header = buffer.split_to(header_size);
 
-    let s_type = String::from_utf8(header.slice(..4).to_vec()).expect("Error");
+    let s_type = str_from_buffer(header.slice(..4));
 
     if s_type == signature { // TODO: Handle subgroups
     }

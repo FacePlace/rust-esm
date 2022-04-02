@@ -1,7 +1,7 @@
 use bytes::{Buf, Bytes};
 use nom::IResult;
 
-use super::headers::Headers;
+use super::{buffer::str_from_buffer, headers::Headers};
 
 #[derive(Debug)]
 #[allow(dead_code)]
@@ -17,7 +17,7 @@ impl Subrecord {
 
     let header = buffer.split_to(header_size);
 
-    let s_type = String::from_utf8(header.slice(..4).to_vec()).expect("Error");
+    let s_type = str_from_buffer(header.slice(..4));
 
     let size = header.slice(4..6).get_u16_le() as usize;
 

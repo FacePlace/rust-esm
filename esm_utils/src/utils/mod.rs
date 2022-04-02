@@ -1,3 +1,4 @@
+pub mod buffer;
 pub mod groups;
 pub mod headers;
 pub mod records;

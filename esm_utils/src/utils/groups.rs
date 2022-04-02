@@ -1,7 +1,7 @@
 use bytes::{Buf, Bytes};
 use nom::IResult;
 
-use super::{headers::Headers, records::Record};
+use super::{buffer::str_from_buffer, headers::Headers, records::Record};
 
 #[derive(Debug)]
 #[allow(dead_code)]
@@ -18,11 +18,11 @@ impl Group {
 
     let header = buffer.split_to(header_size);
 
-    let s_type = String::from_utf8(header.slice(..4).to_vec()).expect("Error");
+    let s_type = str_from_buffer(header.slice(..4));
 
     let size = header.slice(4..8).get_u32_le() as usize;
 
-    let signature = String::from_utf8(header.slice(8..12).to_vec()).expect("Error");
+    let signature = str_from_buffer(header.slice(8..12));
     // println!("Processing group: {}.", signature);
 
     let mut records_buffer = buffer.split_to(size - header_size);
