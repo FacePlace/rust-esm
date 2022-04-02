@@ -12,12 +12,18 @@ pub struct Record {
 }
 
 impl Record {
-  pub fn new(mut buffer: Bytes) -> IResult<Bytes, Self> {
+  pub fn new(
+    mut buffer: Bytes,
+    signature: String,
+  ) -> IResult<Bytes, Self> {
     let header_size = Headers::new().record;
 
     let header = buffer.split_to(header_size);
 
     let s_type = String::from_utf8(header.slice(..4).to_vec()).expect("Error");
+
+    if s_type == signature { // TODO: Handle subgroups
+    }
 
     let size = header.slice(4..8).get_u32_le() as usize;
 

@@ -16,6 +16,7 @@ dependencies = [
  "esm_parser",
  "esm_utils",
  "nom",
+ "wyz",
 ]
 
 [[package]]
@@ -23,7 +24,8 @@ name = "esm_parser"
 version = "0.1.0"
 dependencies = [
  "bytes",
- "hex",
+ "esm_utils",
+ "wyz",
 ]
 
 [[package]]
@@ -32,13 +34,8 @@ version = "0.1.0"
 dependencies = [
  "bytes",
  "nom",
+ "wyz",
 ]
-
-[[package]]
-name = "hex"
-version = "0.4.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
 name = "memchr"
@@ -60,4 +57,19 @@ checksum = "a8903e5a29a317527874d0402f867152a3d21c908bb0b933e416c65e301d4c36"
 dependencies = [
  "memchr",
  "minimal-lexical",
+]
+
+[[package]]
+name = "tap"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "55937e1799185b12863d447f42597ed69d9928686b8d88a1df17376a097d8369"
+
+[[package]]
+name = "wyz"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "30b31594f29d27036c383b53b59ed3476874d518f0efb151b27a4c275141390e"
+dependencies = [
+ "tap",
 ]

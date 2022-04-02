@@ -6,6 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-hex = "0.4.3"
+wyz = "0.5.0"
 bytes = "1.1.0"
+esm_utils = { path = "../esm_utils" }
 

@@ -29,14 +29,9 @@ impl Group {
 
     let mut records = Vec::new();
 
-    if signature != "NAVI"
-      && signature != "CELL"
-      && signature != "WRLD"
-      && signature != "DIAL"
-      && signature != "NPC_"
-    {
+    if signature != "CELL" && signature != "WRLD" && signature != "DIAL" && signature != "NPC_" {
       while records_buffer.len() > 0 {
-        let record_tuple = Record::new(records_buffer).unwrap();
+        let record_tuple = Record::new(records_buffer, signature.to_owned()).unwrap();
 
         records.push(record_tuple.1);
 
