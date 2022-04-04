@@ -1,11 +1,11 @@
 use bytes::{Buf, Bytes};
 use esm_utils::utils::{groups::Group, headers::Headers};
-use std::{fs::File, io::Read, time::Instant};
+use std::{fs::File, io::Read, path::Path, time::Instant};
 
 pub fn parse_esm(path: String) -> Vec<Group> {
     let now = Instant::now();
 
-    let filename = path.split("/").last().unwrap();
+    let filename = Path::new(&path).file_name().unwrap().to_str().unwrap();
 
     let mut f = File::open(path.to_owned()).expect("Not found");
 

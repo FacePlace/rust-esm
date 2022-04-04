@@ -1,19 +1,15 @@
 use esm_parser::parser::parse_esm;
-use std::time::Instant;
+use std::{fs, time::Instant};
 
 fn main() {
     let now = Instant::now();
 
-    let files = vec![
-        "data/Skyrim/Skyrim.esm",
-        "data/Skyrim/Update.esm",
-        "data/Skyrim/HearthFires.esm",
-        "data/Skyrim/Dawnguard.esm",
-        "data/Skyrim/Dragonborn.esm",
-    ];
+    let files = fs::read_dir("data").unwrap();
 
-    for n in files.iter() {
-        let _groups = parse_esm(n.to_string());
+    for n in files {
+        let path = n.unwrap().path().to_str().unwrap().to_owned();
+        // println!("{}", path);
+        let _groups = parse_esm(path);
     }
 
     // println!("{:?}", groups);
